@@ -1,0 +1,22 @@
+# Datos de clientes: nunca al repositorio
+data/
+*.tmp
+
+# Dependencias y entorno
+node_modules/
+.env
+.env.*
+
+# Material de trabajo local (manual de marca, referencias, archivos de WhatsApp)
+*.pdf
+*.jpeg
+*.jpg
+*.zip
+
+# Configuración local del editor / Claude
+.claude/
+.DS_Store
+Thumbs.db
+
+# Planes descargados desde el panel (datos personales)
+plan-*.html

@@ -1,0 +1,10 @@
+data
+node_modules
+.git
+.claude
+*.pdf
+*.jpeg
+*.jpg
+*.zip
+README.md
+render.yaml

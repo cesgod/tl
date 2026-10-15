@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel · Taís Löwe</title>
+<meta name="theme-color" content="#1F3D2E">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin">
+
+<!-- LOGIN -->
+<section class="login" id="login" hidden>
+  <form class="login-card" id="loginForm">
+    <div class="logo"><span class="name">taís<br>l<span class="o">ö</span>we</span><span class="desc">NUTRICIONISTA</span></div>
+    <p class="eyebrow">Acceso profesional</p>
+    <div class="field"><label for="pw">Contraseña</label><input class="input" type="password" id="pw" autocomplete="current-password" required></div>
+    <button class="btn btn-primary" type="submit">Ingresar <span class="arrow">→</span></button>
+    <a href="/" class="back">← Volver al sitio</a>
+  </form>
+</section>
+
+<!-- PANEL -->
+<div class="app" id="app" hidden>
+  <header class="a-top">
+    <div class="wrap a-top-in">
+      <div class="a-brand"><div class="mono">tl</div><div><strong>Panel de planes</strong><span>Lic. Taís Löwe</span></div></div>
+      <div class="a-top-actions">
+        <a class="btn btn-ghost btn-sm" href="/api/admin/export.csv">Exportar CSV</a>
+        <button class="btn btn-sm btn-primary" id="logout">Salir</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap a-main">
+    <div class="a-hello">
+      <p class="eyebrow">Resumen</p>
+      <h1 id="hello">Hola, Taís.</h1>
+    </div>
+
+    <section class="kpis" id="kpis" aria-label="Indicadores"></section>
+
+    <section class="charts">
+      <div class="panel">
+        <div class="panel-h"><h3>Planes creados</h3><span class="label">Últimos 30 días</span></div>
+        <div class="bars" id="daysChart" role="img" aria-label="Planes por día"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><h3>Por objetivo</h3><span class="label">Total</span></div>
+        <div class="hbars" id="goalChart"></div>
+      </div>
+    </section>
+
+    <section class="panel table-panel">
+      <div class="panel-h wrap-h">
+        <h3>Planes <span class="count" id="count"></span></h3>
+        <div class="filters">
+          <input class="input" type="search" id="q" placeholder="Buscar nombre, email, código…" aria-label="Buscar">
+          <select class="input" id="fStatus" aria-label="Filtrar por estado"><option value="">Todos los estados</option></select>
+          <select class="input" id="fGoal" aria-label="Filtrar por objetivo"><option value="">Todos los objetivos</option></select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th>Código</th><th>Fecha</th><th>Persona</th><th>Objetivo</th><th class="num">kcal</th><th>Estado</th><th></th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <p class="empty" id="empty" hidden>Todavía no hay planes. Cuando alguien complete el portal, va a aparecer acá.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- DETALLE -->
+<div class="drawer-bg" id="drawerBg" hidden></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="dName" role="dialog">
+  <button class="drawer-x" id="drawerX" aria-label="Cerrar">×</button>
+  <div id="drawerBody"></div>
+</aside>
+
+<div class="toast" id="toast" role="status"></div>
+<script src="/js/common.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

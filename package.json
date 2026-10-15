@@ -1,0 +1,13 @@
+{
+  "name": "tais-lowe-nutricionista",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing, portal de planes alimentarios y panel de administración para Taís Löwe · Nutricionista",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

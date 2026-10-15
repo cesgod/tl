@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu plan personalizado · Taís Löwe</title>
+<meta name="description" content="Completá tus datos y Taís Löwe prepara tu plan alimentario personalizado.">
+<meta name="theme-color" content="#1F3D2E">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="/css/portal.css">
+</head>
+<body class="portal">
+
+<header class="p-top">
+  <div class="wrap p-top-in">
+    <a href="/" class="logo h" aria-label="Volver al inicio"><span class="name">taís l<span class="o">ö</span>we</span><span class="desc">NUTRICIONISTA</span></a>
+    <a href="/" class="p-exit">← Volver al sitio</a>
+  </div>
+  <div class="p-progress" aria-hidden="true"><div id="progressBar"></div></div>
+</header>
+
+<main class="wrap p-main">
+  <aside class="p-side" aria-label="Pasos">
+    <p class="eyebrow">Portal de planes</p>
+    <ol class="p-steps" id="stepList">
+      <li data-i="0">Objetivo</li>
+      <li data-i="1">Tus datos</li>
+      <li data-i="2">Movimiento</li>
+      <li data-i="3">Alimentación</li>
+      <li data-i="4">Salud</li>
+      <li data-i="5">Contacto</li>
+    </ol>
+    <p class="p-note">Tus respuestas se usan solo para preparar tu plan. Toma unos 5 minutos.</p>
+  </aside>
+
+  <form id="wizard" class="p-form" novalidate>
+    <!-- 1 · OBJETIVO -->
+    <section class="step" data-step="0">
+      <p class="step-k">Paso 1 de 6</p>
+      <h1>¿Qué querés <em class="serif gold">lograr?</em></h1>
+      <p class="lead">Elegí el objetivo principal. Después lo afinamos juntas/os en la consulta.</p>
+      <div class="cards-choice" id="goalCards"></div>
+
+      <div class="grid-2 mt">
+        <div class="field">
+          <span class="label">Ritmo</span>
+          <div class="seg-ctl" id="pace">
+            <label><input type="radio" name="pace" value="suave"><span>Suave</span></label>
+            <label><input type="radio" name="pace" value="moderado" checked><span>Moderado</span></label>
+            <label><input type="radio" name="pace" value="intenso"><span>Intenso</span></label>
+          </div>
+          <span class="hint" id="paceHint">Un equilibrio entre resultados y sostenibilidad.</span>
+        </div>
+        <div class="field">
+          <label for="targetWeight">Peso objetivo <span class="opt">(opcional)</span></label>
+          <div class="unit-input"><input class="input" id="targetWeight" name="targetWeight" type="number" inputmode="decimal" min="30" max="300" step="0.1"><span>kg</span></div>
+        </div>
+      </div>
+      <div class="field mt">
+        <label for="motivation">¿Por qué es importante para vos? <span class="opt">(opcional)</span></label>
+        <textarea class="input" id="motivation" name="motivation" rows="2" maxlength="400" placeholder="Ej.: tener más energía, sentirme cómoda/o, mejorar mis análisis…"></textarea>
+      </div>
+    </section>
+
+    <!-- 2 · DATOS -->
+    <section class="step" data-step="1" hidden>
+      <p class="step-k">Paso 2 de 6</p>
+      <h1>Contame <em class="serif gold">sobre vos.</em></h1>
+      <p class="lead">Con estos datos calculo tu metabolismo y tus requerimientos.</p>
+      <div class="field">
+        <span class="label">Sexo biológico <span class="opt">(para el cálculo metabólico)</span></span>
+        <div class="seg-ctl" id="sex">
+          <label><input type="radio" name="sex" value="F"><span>Femenino</span></label>
+          <label><input type="radio" name="sex" value="M"><span>Masculino</span></label>
+        </div>
+      </div>
+      <div class="grid-3 mt">
+        <div class="field"><label for="age">Edad</label><div class="unit-input"><input class="input" id="age" name="age" type="number" inputmode="numeric" min="14" max="99" required><span>años</span></div></div>
+        <div class="field"><label for="weight">Peso actual</label><div class="unit-input"><input class="input" id="weight" name="weight" type="number" inputmode="decimal" min="30" max="300" step="0.1" required><span>kg</span></div></div>
+        <div class="field"><label for="height">Altura</label><div class="unit-input"><input class="input" id="height" name="height" type="number" inputmode="numeric" min="120" max="230" required><span>cm</span></div></div>
+      </div>
+      <div class="field mt">
+        <label for="waist">Perímetro de cintura <span class="opt">(opcional)</span></label>
+        <div class="unit-input narrow"><input class="input" id="waist" name="waist" type="number" inputmode="decimal" min="40" max="200" step="0.5"><span>cm</span></div>
+        <span class="hint">Medido a la altura del ombligo, al final de una exhalación. Mejora la precisión del cálculo.</span>
+      </div>
+      <div class="body-figure" aria-hidden="true">
+        <svg viewBox="0 0 120 200" id="figure"><path d="M60 14a12 12 0 1 1 0 24a12 12 0 1 1 0-24z" fill="#1F3D2E"/><path id="torso" d="M40 44h40c6 0 10 4 10 10l-4 56h-52l-4-56c0-6 4-10 10-10z" fill="#7A9477"/><path d="M38 110h44l-4 80h-12l-6-60-6 60h-12z" fill="#1F3D2E"/><line x1="30" y1="86" x2="90" y2="86" stroke="#C9A24B" stroke-dasharray="3 3"/></svg>
+      </div>
+    </section>
+
+    <!-- 3 · MOVIMIENTO -->
+    <section class="step" data-step="2" hidden>
+      <p class="step-k">Paso 3 de 6</p>
+      <h1>¿Cómo te <em class="serif gold">movés?</em></h1>
+      <p class="lead">Tu movimiento diario y tus entrenamientos definen cuánta energía necesitás.</p>
+
+      <div class="field"><span class="label">En tu trabajo o actividad principal pasás el día…</span><div class="cards-choice small" id="occCards"></div></div>
+      <div class="field mt"><span class="label">Pasos diarios aproximados</span><div class="chips" id="stepsChips"></div></div>
+
+      <div class="field mt">
+        <span class="label">Entrenamientos semanales</span>
+        <div id="trainings" class="trainings"></div>
+        <button type="button" class="btn btn-ghost btn-sm add-train" id="addTraining">+ Agregar actividad</button>
+        <span class="hint">Si hoy no entrenás, dejalo vacío.</span>
+      </div>
+
+      <div class="field mt" id="trainTimeWrap">
+        <span class="label">¿En qué momento del día entrenás?</span>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="trainTime" value="manana"><span>Mañana</span></label>
+          <label class="chip"><input type="radio" name="trainTime" value="mediodia"><span>Mediodía</span></label>
+          <label class="chip"><input type="radio" name="trainTime" value="tarde"><span>Tarde</span></label>
+          <label class="chip"><input type="radio" name="trainTime" value="noche"><span>Noche</span></label>
+        </div>
+      </div>
+
+      <div class="grid-2 mt">
+        <div class="field">
+          <label for="sleep">Horas de sueño: <output id="sleepOut">7</output> h</label>
+          <input type="range" id="sleep" name="sleep" min="4" max="10" step="0.5" value="7">
+        </div>
+        <div class="field">
+          <label for="stress">Nivel de estrés: <output id="stressOut">Moderado</output></label>
+          <input type="range" id="stress" name="stress" min="1" max="5" step="1" value="3">
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · ALIMENTACIÓN -->
+    <section class="step" data-step="3" hidden>
+      <p class="step-k">Paso 4 de 6</p>
+      <h1>Tus <em class="serif gold">preferencias.</em></h1>
+      <p class="lead">El mejor plan es el que disfrutás. Contame cómo comés.</p>
+
+      <div class="field"><span class="label">Tipo de alimentación</span><div class="chips" id="dietChips"></div></div>
+      <div class="field mt"><span class="label">Alergias o intolerancias</span><div class="chips" id="allergyChips"></div></div>
+
+      <div class="grid-2 mt">
+        <div class="field">
+          <span class="label">Comidas por día</span>
+          <div class="seg-ctl" id="meals">
+            <label><input type="radio" name="meals" value="3"><span>3</span></label>
+            <label><input type="radio" name="meals" value="4" checked><span>4</span></label>
+            <label><input type="radio" name="meals" value="5"><span>5</span></label>
+            <label><input type="radio" name="meals" value="6"><span>6</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label">Tiempo para cocinar</span>
+          <div class="seg-ctl" id="cooking">
+            <label><input type="radio" name="cooking" value="rapido"><span>Poco · rápido</span></label>
+            <label><input type="radio" name="cooking" value="normal" checked><span>Normal</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field mt">
+        <span class="label">Alimentos que <strong>no</strong> te gustan</span>
+        <span class="hint">Tocá para excluirlos del plan.</span>
+        <div id="dislikeGroups" class="food-groups neg"></div>
+      </div>
+      <div class="field mt">
+        <span class="label">Tus favoritos</span>
+        <span class="hint">Van a aparecer más seguido.</span>
+        <div id="favGroups" class="food-groups fav"></div>
+      </div>
+    </section>
+
+    <!-- 5 · SALUD -->
+    <section class="step" data-step="4" hidden>
+      <p class="step-k">Paso 5 de 6</p>
+      <h1>Tu <em class="serif gold">salud.</em></h1>
+      <p class="lead">Esta información me permite cuidarte. Si alguna aplica, la revisamos en detalle en la consulta.</p>
+      <div class="field"><span class="label">¿Tenés alguna de estas condiciones?</span><div class="chips" id="condChips"></div></div>
+      <div class="field mt"><label for="medication">Medicación actual <span class="opt">(opcional)</span></label><input class="input" id="medication" name="medication" maxlength="300"></div>
+      <div class="field mt"><label for="notes">Algo más que quieras contarme <span class="opt">(opcional)</span></label><textarea class="input" id="notes" name="notes" rows="3" maxlength="600" placeholder="Horarios, cirugías, análisis recientes, digestión…"></textarea></div>
+    </section>
+
+    <!-- 6 · CONTACTO -->
+    <section class="step" data-step="5" hidden>
+      <p class="step-k">Paso 6 de 6</p>
+      <h1>¿Cómo te <em class="serif gold">contacto?</em></h1>
+      <p class="lead">Tu plan queda guardado con un código. Te lo entrego y explico en la consulta.</p>
+      <div class="field"><label for="name">Nombre y apellido</label><input class="input" id="name" name="name" autocomplete="name" maxlength="80" required></div>
+      <div class="grid-2 mt">
+        <div class="field"><label for="email">Email</label><input class="input" id="email" name="email" type="email" autocomplete="email" maxlength="120" required></div>
+        <div class="field"><label for="phone">WhatsApp</label><input class="input" id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40" required></div>
+      </div>
+      <label class="consent mt"><input type="checkbox" id="consent"> <span>Acepto que Taís Löwe use estos datos para preparar mi plan y contactarme. Entiendo que el plan es orientativo y se valida en consulta profesional.</span></label>
+    </section>
+
+    <div class="p-actions" id="actions">
+      <button type="button" class="btn btn-ghost" id="prevBtn">← Atrás</button>
+      <button type="submit" class="btn btn-primary" id="nextBtn">Continuar <span class="arrow">→</span></button>
+    </div>
+  </form>
+
+  <!-- PROCESANDO -->
+  <section class="processing" id="processing" hidden aria-live="polite">
+    <div class="proc-ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="#E8D5A3" stroke-width="4"/><circle id="procArc" cx="60" cy="60" r="52" fill="none" stroke="#C9A24B" stroke-width="4" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327" transform="rotate(-90 60 60)"/></svg><span class="mono-t">tl</span></div>
+    <h2>Preparando tu plan…</h2>
+    <ul class="proc-list" id="procList"></ul>
+  </section>
+
+  <!-- RESULTADO BLOQUEADO -->
+  <section class="done" id="done" hidden>
+    <div class="done-card">
+      <div class="done-head">
+        <span class="label">Plan alimentario</span>
+        <span class="code" id="doneCode">TL-0000</span>
+      </div>
+      <h2>¡Listo, <span id="doneName"></span>!<br><em class="serif gold">Tu plan está preparado.</em></h2>
+      <p class="lead">Calculé tu gasto energético, tus calorías y macronutrientes, y armé tu plan semanal con lista de compras y recomendaciones para llegar a tu objetivo.</p>
+
+      <div class="locked">
+        <div class="locked-blur" aria-hidden="true">
+          <div class="lb-row"><i></i><i></i><i></i><i></i></div>
+          <div class="lb-days"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="lb-lines"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="locked-msg">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          <strong>Tu plan se desbloquea en la consulta</strong>
+          <p>Para que sea seguro y realmente tuyo, lo reviso antes de entregártelo. Escribime con tu código y coordinamos.</p>
+        </div>
+      </div>
+
+      <div class="done-ctas">
+        <a class="btn btn-primary" id="waBtn" href="#" target="_blank" rel="noopener">Escribir por WhatsApp <span class="arrow">→</span></a>
+        <button class="btn btn-ghost" type="button" id="callbackBtn">Prefiero que me contacten</button>
+      </div>
+      <div class="callback" id="callbackBox" hidden>
+        <span class="label">¿Cuándo te viene mejor?</span>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="cbTime" value="Mañana" checked><span>Mañana</span></label>
+          <label class="chip"><input type="radio" name="cbTime" value="Tarde"><span>Tarde</span></label>
+          <label class="chip"><input type="radio" name="cbTime" value="Noche"><span>Noche</span></label>
+        </div>
+        <button class="btn btn-gold btn-sm" type="button" id="callbackSend">Confirmar</button>
+      </div>
+      <p class="done-ok" id="doneOk" hidden>✦ ¡Gracias! Ya tengo tu solicitud. Te contacto a la brevedad.</p>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+<script src="/js/common.js"></script>
+<script src="/js/portal.js"></script>
+</body>
+</html>

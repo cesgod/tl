@@ -1,0 +1,28 @@
+# Blueprint de Render: deploy en un clic desde GitHub (render.com → New → Blueprint)
+services:
+  - type: web
+    name: tais-lowe
+    runtime: node
+    plan: free
+    buildCommand: npm install --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"
+      - key: NODE_VERSION
+        value: "20"
+      # Render genera una contraseña aleatoria; la ves en Dashboard → Environment.
+      # Podés reemplazarla por una propia cuando quieras.
+      - key: ADMIN_PASSWORD
+        generateValue: true
+    # En el plan gratuito el disco no es persistente: los planes se borran al reiniciar
+    # o redeployar. Para uso real, cambiá a plan "starter" y descomentá esto:
+    # disk:
+    #   name: tais-lowe-data
+    #   mountPath: /var/data
+    #   sizeGB: 1
+    # y agregá la variable DATA_DIR=/var/data en envVars.
